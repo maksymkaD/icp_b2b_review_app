@@ -1,0 +1,16 @@
+type Review = record {
+    id: nat64;
+    author: text;
+    review_text: text;
+    timestamp: nat64;
+};
+
+type State = record {
+    reviews: vec Review;
+};
+
+service : {
+    get_reviews: () -> (vec Review);
+    add_review: (author: text, review_text: text) -> ();
+    clear_all_reviews: () -> ();
+};

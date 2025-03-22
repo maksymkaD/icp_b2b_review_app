@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  padding: 0px;
+}
+
+h2 {
+  color: #023e8a;
+  margin: 0;
+}
+
+#icplogo > img:hover {
+  transform: scale(1.1);
+}
+
+h1,
+p,
+li {
+  color: #001d3d;
+}
+
+code {
+  width: 80%;
+  height: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  font-family: Menlo, Monaco, "Courier New", Courier, monospace;
+  white-space: pre;
+  font-size: 16px;
+  font-weight: 400;
+  overflow-y: scroll;
+}
+
+span,a {
+  color: #023e8a;
+}
+
+section {
+  margin-bottom: 30px;
+  text-align: left;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: rgba(217, 218, 219, 0.8);
+}
+
+.demo {
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(217, 218, 219, 0.8);
+  padding-bottom: 10px;
+}
+
+form {
+  display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    background-color: #ebfbfe;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: #ebfbfe;
+  background-color: #023e8a;
+  border: none;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+form button {
+  margin-top: 10px;
+}
+
+button:focus {
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+input {
+  background: 0;
+  border: 0;
+  outline: none;
+  width: 80vw;
+  max-width: 400px;
+  transition: padding 0.3s 0.2s ease;
+}
+
+input:focus {
+  padding-bottom: 5px;
+}
+
+input:focus + .line:after {
+  transform: scaleX(1);
+}
+
+.field {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.field .line {
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  bottom: -8px;
+  background: #ccedff;
+}
+
+.field .line:after {
+  content: " ";
+  position: absolute;
+  float: right;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  background: #023e8a;
+}
+
+.main {
+  background-image: url('https://storage.needpix.com/rsynced_images/background-1747792_1280.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  min-height: 100vh; /* Ensures the container is at least the height of the viewport */
+  margin: 0; /* Removes any default margin */
+  padding: 0; /* Removes any default padding */
+  box-sizing: border-box; /* Ensures padding and borders are included in the element's dimensions */
+  padding-bottom: 10px;
+}
+
+iframe {
+  width: 100%;
+  height: 260px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #e0f4ff !important;
+  border-radius: 10px;
+}
+
+iframe body {
+  padding: 20px;
+}
+
+.feedback {
+  margin: 20px;
+}

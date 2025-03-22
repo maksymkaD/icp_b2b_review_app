@@ -1,0 +1,33 @@
+{
+  "canisters": {
+    "hello": {
+      "candid": "src/hello/hello.did",
+      "package": "hello",
+      "type": "rust"
+    },
+    "review_contract": {
+      "type": "rust",
+      "package": "review_contract",
+      "candid": "src/review_contract/review_contract.did"
+    },
+    "review_assets": {
+      "dependencies": [
+        "hello", "review_contract"
+      ],
+      "frontend": {
+        "entrypoint": "frontend/build/index.html"
+      },
+      "source": [
+        "frontend/build"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "version": 1
+}
