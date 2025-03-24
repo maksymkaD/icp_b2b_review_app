@@ -20,7 +20,6 @@ pub struct State {
 
 #[ic_cdk::init]
 fn init() {
-    // Always initialize storage with an empty state
     let initial_state = State { reviews: Vec::new() };
     storage::stable_save((initial_state,)).expect("Failed to initialize state");
 }
@@ -30,11 +29,10 @@ fn init() {
 fn get_reviews() -> Vec<Review> {
     match storage::stable_restore::<(State,)>() {
         Ok((state,)) => state.reviews,
-        Err(_) => Vec::new(), // Return an empty vector if storage is uninitialized or corrupted
+        Err(_) => Vec::new(), 
     }
 }
 
-//Generate a unique ID for each review
 fn calculate_hash<T: Hash>(t: &T) -> u64 {
     let mut hasher = DefaultHasher::new();
     t.hash(&mut hasher);
@@ -50,15 +48,12 @@ fn clear_all_reviews() {
 fn add_review(author: String, review_text: String) {
     let timestamp = time();
 
-    // Concatenate author, review_text, and timestamp into a single string
     let combined = format!("{}{}{}", author, review_text, timestamp);
 
     let id = calculate_hash(&combined);
 
-    // Restore state safely
     let (mut state,): (State,) = storage::stable_restore().unwrap_or_else(|_| (State { reviews: Vec::new() },));
 
-    // Add the new review to the reviews list
     let new_review = Review {
         id,
         author,
@@ -67,6 +62,5 @@ fn add_review(author: String, review_text: String) {
     };
     state.reviews.push(new_review);
     
-    // Save the updated state back to stable storage
     storage::stable_save((state,)).expect("Failed to save state");
 }

@@ -47386,17 +47386,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.css */ "./frontend/src/App.css");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./frontend/node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! framer-motion */ "./frontend/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var framer_motion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! framer-motion */ "./frontend/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs");
+/* harmony import */ var _dfinity_agent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @dfinity/agent */ "./frontend/node_modules/@dfinity/agent/lib/esm/index.js");
+/* harmony import */ var _components_idlFactory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/idlFactory */ "./frontend/src/components/idlFactory.js");
+
+
 
 
 
 function Main() {
-  const canisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
   const styles = {
     container: {
-      maxWidth: "800px",
-      margin: "auto",
-      padding: "20px",
+      paddingLeft: "10%",
+      paddingRight: "10%",
       textAlign: "center"
     },
     header: {
@@ -47408,17 +47410,31 @@ function Main() {
       cursor: "pointer"
     }
   };
+  const canisterId = "b77ix-eeaaa-aaaaa-qaada-cai";
+  const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : "https://ic0.app";
+  const agent = _dfinity_agent__WEBPACK_IMPORTED_MODULE_2__.HttpAgent.createSync({
+    host: host
+  });
+  const actor = _dfinity_agent__WEBPACK_IMPORTED_MODULE_2__.Actor.createActor(_components_idlFactory__WEBPACK_IMPORTED_MODULE_3__.idlFactory, {
+    agent,
+    canisterId: canisterId
+  });
   const [location, setLocation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     // Remove trailing slash if it exists
     const baseUrl = window.location.href.endsWith("/") ? window.location.href.slice(0, -1) : window.location.href;
     setLocation(`${baseUrl}/embed/${canisterId}`);
   }, []);
-  return /*#__PURE__*/React.createElement("div", {
+  const postReview = async (name, text) => {
+    await agent.fetchRootKey();
+    await actor.add_review(name, text);
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "main",
     style: styles.container
   }, /*#__PURE__*/React.createElement("header", {
     style: styles.header
-  }, /*#__PURE__*/React.createElement(framer_motion__WEBPACK_IMPORTED_MODULE_2__.motion.h1, {
+  }, /*#__PURE__*/React.createElement(framer_motion__WEBPACK_IMPORTED_MODULE_4__.motion.h1, {
     className: "text-4xl font-bold mb-6",
     initial: {
       opacity: 0,
@@ -47428,7 +47444,29 @@ function Main() {
       opacity: 1,
       y: 0
     }
-  }, "TrustChain Reviews \u2013 ", /*#__PURE__*/React.createElement("span", null, "Immutable & Secure")), /*#__PURE__*/React.createElement("p", null, "Blockchain-powered reviews that ", /*#__PURE__*/React.createElement("span", null, "cannot"), " be edited or deleted.")), /*#__PURE__*/React.createElement("section", {
+  }, "TrustChain Reviews \u2013 ", /*#__PURE__*/React.createElement("span", null, "Immutable & Secure")), /*#__PURE__*/React.createElement("div", {
+    id: "icplogo",
+    style: {
+      margin: "20px 0",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "https://cryptologos.cc/logos/internet-computer-icp-logo.png",
+    alt: "ICP Logo",
+    style: {
+      width: "100px",
+      marginBottom: "10px"
+    }
+  }), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: "18px",
+      fontWeight: "bold"
+    }
+  }, "Powered by ", /*#__PURE__*/React.createElement("a", {
+    href: "https://internetcomputer.org/",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "ICP"))), /*#__PURE__*/React.createElement("p", null, "Blockchain-powered reviews that ", /*#__PURE__*/React.createElement("span", null, "cannot"), " be edited or deleted.")), /*#__PURE__*/React.createElement("section", {
     className: "why"
   }, /*#__PURE__*/React.createElement("h2", null, "Why TrustChain Reviews?"), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, "\uD83D\uDD12 ", /*#__PURE__*/React.createElement("strong", null, "Immutable:"), " Once posted, reviews cannot be changed."), /*#__PURE__*/React.createElement("li", null, "\uD83D\uDEE1\uFE0F ", /*#__PURE__*/React.createElement("strong", null, "Tamper-proof:"), " No admin or business can modify reviews."), /*#__PURE__*/React.createElement("li", null, "\uD83D\uDCDC ", /*#__PURE__*/React.createElement("strong", null, "Transparent:"), " Everything is stored on the blockchain."))), /*#__PURE__*/React.createElement("section", {
     className: "demo"
@@ -47437,7 +47475,7 @@ function Main() {
       e.preventDefault(); // Prevent page reload
       const author = e.target.author.value;
       const reviewText = e.target.review_text.value;
-      alert(`Review submitted by ${author}: ${reviewText}`);
+      postReview(author, reviewText);
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "field"
@@ -47464,7 +47502,7 @@ function Main() {
     src: location,
     title: "Immutable Review Widget",
     sandbox: "allow-scripts"
-  })), /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("p", null, "Interested? Get in touch to integrate ", /*#__PURE__*/React.createElement("span", null, "TrustChain"), " into your business!"), /*#__PURE__*/React.createElement("button", {
+  }))), /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("p", null, "Interested? Get in touch to integrate ", /*#__PURE__*/React.createElement("span", null, "TrustChain"), " into your business!"), /*#__PURE__*/React.createElement("button", {
     style: styles.button,
     onClick: () => alert("Coming soon!")
   }, "Contact Us")));
@@ -47492,12 +47530,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // Import your canister's IDL
 
 const Review = () => {
   const {
     id
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)(); // Access the dynamic :id from the URL
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)();
   const [blockchainData, setBlockchainData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : "https://ic0.app";
   const agent = _dfinity_agent__WEBPACK_IMPORTED_MODULE_1__.HttpAgent.createSync({
@@ -47519,7 +47556,6 @@ const Review = () => {
     fetchReviews();
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    // Fetch blockchain data based on the id, or update iframe src, etc.
     fetchBlockchainData();
   });
   const fetchBlockchainData = async () => {
@@ -47527,7 +47563,9 @@ const Review = () => {
     const reviews = await actor.get_reviews();
     setBlockchainData(reviews);
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "reviews: ", id), blockchainData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, JSON.stringify(blockchainData, (_, v) => typeof v === "bigint" ? v.toString() : v, 4 // Adds indentation for better readability
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "feedback"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "reviews: ", id), blockchainData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", null, JSON.stringify(blockchainData, (_, v) => typeof v === "bigint" ? v.toString() : v, 4 // Adds indentation for better readability
   )) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading data..."));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Review);
@@ -47621,7 +47659,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  height: 40vmin;\n  pointer-events: none;\n}\n\n@media (prefers-reduced-motion: no-preference) {\n  .App-logo {\n    animation: App-logo-spin infinite 20s linear;\n  }\n}\n\n.App-header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #61dafb;\n}\n\n@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n", "",{"version":3,"sources":["webpack://./frontend/src/App.css"],"names":[],"mappings":"AAAA;EACE,kBAAkB;AACpB;;AAEA;EACE,cAAc;EACd,oBAAoB;AACtB;;AAEA;EACE;IACE,4CAA4C;EAC9C;AACF;;AAEA;EACE,yBAAyB;EACzB,iBAAiB;EACjB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,6BAA6B;EAC7B,YAAY;AACd;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE;IACE,uBAAuB;EACzB;EACA;IACE,yBAAyB;EAC3B;AACF","sourcesContent":[".App {\n  text-align: center;\n}\n\n.App-logo {\n  height: 40vmin;\n  pointer-events: none;\n}\n\n@media (prefers-reduced-motion: no-preference) {\n  .App-logo {\n    animation: App-logo-spin infinite 20s linear;\n  }\n}\n\n.App-header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #61dafb;\n}\n\n@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  height: 40vmin;\n  pointer-events: none;\n}\n\n\n@media (prefers-reduced-motion: no-preference) {\n  .App-logo {\n    animation: App-logo-spin infinite 20s linear;\n  }\n}\n\n.App-header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #61dafb;\n}\n\n@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n", "",{"version":3,"sources":["webpack://./frontend/src/App.css"],"names":[],"mappings":"AAAA;EACE,kBAAkB;AACpB;;AAEA;EACE,cAAc;EACd,oBAAoB;AACtB;;;AAGA;EACE;IACE,4CAA4C;EAC9C;AACF;;AAEA;EACE,yBAAyB;EACzB,iBAAiB;EACjB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,6BAA6B;EAC7B,YAAY;AACd;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE;IACE,uBAAuB;EACzB;EACA;IACE,yBAAyB;EAC3B;AACF","sourcesContent":[".App {\n  text-align: center;\n}\n\n.App-logo {\n  height: 40vmin;\n  pointer-events: none;\n}\n\n\n@media (prefers-reduced-motion: no-preference) {\n  .App-logo {\n    animation: App-logo-spin infinite 20s linear;\n  }\n}\n\n.App-header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #61dafb;\n}\n\n@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -47649,7 +47687,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n  font-family: \"Lato\", sans-serif;\n  font-weight: 400;\n  font-style: normal;\n  background-color: #ebfbfe;\n  padding: 20px;\n}\n\nbody {\n  background-image: url('https://wallpapersok.com/images/high/upgrade-your-tech-game-with-4k-technology-40t2zerm2f3xxxnu.webp');\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n}\n\nh2 {\n  color: #023e8a;\n  margin: 0;\n}\n\nh1,\np,\nli {\n  color: #001d3d;\n}\n\ncode {\n  width: 80%;\n  height: 300px;\n  margin: 0 auto;\n  margin-top: 20px;\n  padding: 20px;\n  font-family: Menlo, Monaco, \"Courier New\", Courier, monospace;\n  white-space: pre;\n  font-size: 16px;\n  font-weight: 400;\n  overflow-y: scroll;\n}\n\nspan {\n  color: #023e8a;\n}\n\nsection {\n  margin-bottom: 30px;\n  text-align: left;\n  border-radius: 10px;\n  padding: 15px;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: #ccedff;\n}\n\nul {\n  list-style-type: none;\n  padding-left: 10px;\n}\n\nfooter {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\nform {\n  display: flex;\n    flex-direction: column;\n    margin-top: 10px;\n    background-color: #ebfbfe;\n    padding: 10px;\n    border-radius: 10px;\n}\n\nbutton {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 6px 14px;\n  border-radius: 6px;\n  color: #023e8a;\n  background-color: #98d8fe;\n  border: none;\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nform button {\n  margin-top: 10px;\n}\n\nbutton:focus {\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);\n  outline: 0;\n}\n\ninput {\n  background: 0;\n  border: 0;\n  outline: none;\n  width: 80vw;\n  max-width: 400px;\n  transition: padding 0.3s 0.2s ease;\n}\n\ninput:focus {\n  padding-bottom: 5px;\n}\n\ninput:focus + .line:after {\n  transform: scaleX(1);\n}\n\n.field {\n  position: relative;\n  margin-bottom: 10px;\n}\n\n.field .line {\n  width: 100%;\n  height: 3px;\n  position: absolute;\n  bottom: -8px;\n  background: #ccedff;\n}\n\n.field .line:after {\n  content: \" \";\n  position: absolute;\n  float: right;\n  width: 100%;\n  height: 3px;\n  transform: scaleX(0);\n  transition: transform 0.3s ease;\n  background: #023e8a;\n}\n\n\niframe {\n  width: 100%;\n  height: 260px;\n  border: none;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: #e0f4ff;\n  border-radius: 10px;\n}\n\niframe body {\n  padding: 20px;\n}", "",{"version":3,"sources":["webpack://./frontend/src/index.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,+BAA+B;EAC/B,gBAAgB;EAChB,kBAAkB;EAClB,yBAAyB;EACzB,aAAa;AACf;;AAEA;EACE,6HAA6H;EAC7H,sBAAsB;EACtB,2BAA2B;EAC3B,4BAA4B;AAC9B;;AAEA;EACE,cAAc;EACd,SAAS;AACX;;AAEA;;;EAGE,cAAc;AAChB;;AAEA;EACE,UAAU;EACV,aAAa;EACb,cAAc;EACd,gBAAgB;EAChB,aAAa;EACb,6DAA6D;EAC7D,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,kBAAkB;AACpB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,mBAAmB;EACnB,gBAAgB;EAChB,mBAAmB;EACnB,aAAa;EACb,iDAAiD;EACjD,yBAAyB;AAC3B;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,aAAa;IACX,sBAAsB;IACtB,gBAAgB;IAChB,yBAAyB;IACzB,aAAa;IACb,mBAAmB;AACvB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,iBAAiB;EACjB,kBAAkB;EAClB,cAAc;EACd,yBAAyB;EACzB,YAAY;EACZ,4CAA4C;EAC5C,iBAAiB;EACjB,yBAAyB;EACzB,0BAA0B;AAC5B;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,uFAAuF;EACvF,UAAU;AACZ;;AAEA;EACE,aAAa;EACb,SAAS;EACT,aAAa;EACb,WAAW;EACX,gBAAgB;EAChB,kCAAkC;AACpC;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,oBAAoB;AACtB;;AAEA;EACE,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,WAAW;EACX,kBAAkB;EAClB,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,kBAAkB;EAClB,YAAY;EACZ,WAAW;EACX,WAAW;EACX,oBAAoB;EACpB,+BAA+B;EAC/B,mBAAmB;AACrB;;;AAGA;EACE,WAAW;EACX,aAAa;EACb,YAAY;EACZ,iDAAiD;EACjD,yBAAyB;EACzB,mBAAmB;AACrB;;AAEA;EACE,aAAa;AACf","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');\n\nbody {\n  margin: 0;\n  font-family: \"Lato\", sans-serif;\n  font-weight: 400;\n  font-style: normal;\n  background-color: #ebfbfe;\n  padding: 20px;\n}\n\nbody {\n  background-image: url('https://wallpapersok.com/images/high/upgrade-your-tech-game-with-4k-technology-40t2zerm2f3xxxnu.webp');\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n}\n\nh2 {\n  color: #023e8a;\n  margin: 0;\n}\n\nh1,\np,\nli {\n  color: #001d3d;\n}\n\ncode {\n  width: 80%;\n  height: 300px;\n  margin: 0 auto;\n  margin-top: 20px;\n  padding: 20px;\n  font-family: Menlo, Monaco, \"Courier New\", Courier, monospace;\n  white-space: pre;\n  font-size: 16px;\n  font-weight: 400;\n  overflow-y: scroll;\n}\n\nspan {\n  color: #023e8a;\n}\n\nsection {\n  margin-bottom: 30px;\n  text-align: left;\n  border-radius: 10px;\n  padding: 15px;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: #ccedff;\n}\n\nul {\n  list-style-type: none;\n  padding-left: 10px;\n}\n\nfooter {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\nform {\n  display: flex;\n    flex-direction: column;\n    margin-top: 10px;\n    background-color: #ebfbfe;\n    padding: 10px;\n    border-radius: 10px;\n}\n\nbutton {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 6px 14px;\n  border-radius: 6px;\n  color: #023e8a;\n  background-color: #98d8fe;\n  border: none;\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nform button {\n  margin-top: 10px;\n}\n\nbutton:focus {\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);\n  outline: 0;\n}\n\ninput {\n  background: 0;\n  border: 0;\n  outline: none;\n  width: 80vw;\n  max-width: 400px;\n  transition: padding 0.3s 0.2s ease;\n}\n\ninput:focus {\n  padding-bottom: 5px;\n}\n\ninput:focus + .line:after {\n  transform: scaleX(1);\n}\n\n.field {\n  position: relative;\n  margin-bottom: 10px;\n}\n\n.field .line {\n  width: 100%;\n  height: 3px;\n  position: absolute;\n  bottom: -8px;\n  background: #ccedff;\n}\n\n.field .line:after {\n  content: \" \";\n  position: absolute;\n  float: right;\n  width: 100%;\n  height: 3px;\n  transform: scaleX(0);\n  transition: transform 0.3s ease;\n  background: #023e8a;\n}\n\n\niframe {\n  width: 100%;\n  height: 260px;\n  border: none;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: #e0f4ff;\n  border-radius: 10px;\n}\n\niframe body {\n  padding: 20px;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n  font-family: \"Lato\", sans-serif;\n  font-weight: 400;\n  font-style: normal;\n  padding: 0px;\n}\n\nh2 {\n  color: #023e8a;\n  margin: 0;\n}\n\n#icplogo > img:hover {\n  transform: scale(1.1);\n}\n\nh1,\np,\nli {\n  color: #001d3d;\n}\n\ncode {\n  width: 80%;\n  height: 300px;\n  margin: 0 auto;\n  margin-top: 20px;\n  padding: 20px;\n  font-family: Menlo, Monaco, \"Courier New\", Courier, monospace;\n  white-space: pre;\n  font-size: 16px;\n  font-weight: 400;\n  overflow-y: scroll;\n}\n\nspan,a {\n  color: #023e8a;\n}\n\nsection {\n  margin-bottom: 30px;\n  text-align: left;\n  border-radius: 10px;\n  padding: 15px;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: rgba(217, 218, 219, 0.8);\n}\n\n.demo {\n  margin-bottom: 20px;\n}\n\nul {\n  list-style-type: none;\n  padding-left: 10px;\n}\n\nfooter {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  background-color: rgba(217, 218, 219, 0.8);\n  padding-bottom: 10px;\n}\n\nform {\n  display: flex;\n    flex-direction: column;\n    margin-top: 10px;\n    background-color: #ebfbfe;\n    padding: 10px;\n    border-radius: 10px;\n}\n\nbutton {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 6px 14px;\n  border-radius: 6px;\n  color: #ebfbfe;\n  background-color: #023e8a;\n  border: none;\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nform button {\n  margin-top: 10px;\n}\n\nbutton:focus {\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);\n  outline: 0;\n}\n\ninput {\n  background: 0;\n  border: 0;\n  outline: none;\n  width: 80vw;\n  max-width: 400px;\n  transition: padding 0.3s 0.2s ease;\n}\n\ninput:focus {\n  padding-bottom: 5px;\n}\n\ninput:focus + .line:after {\n  transform: scaleX(1);\n}\n\n.field {\n  position: relative;\n  margin-bottom: 10px;\n}\n\n.field .line {\n  width: 100%;\n  height: 3px;\n  position: absolute;\n  bottom: -8px;\n  background: #ccedff;\n}\n\n.field .line:after {\n  content: \" \";\n  position: absolute;\n  float: right;\n  width: 100%;\n  height: 3px;\n  transform: scaleX(0);\n  transition: transform 0.3s ease;\n  background: #023e8a;\n}\n\n.main {\n  background-image: url('https://storage.needpix.com/rsynced_images/background-1747792_1280.jpg'); /* Replace with your image path */\n  background-size: cover; /* Ensures the image covers the entire container */\n  background-position: center; /* Centers the image */\n  background-repeat: no-repeat; /* Prevents the image from repeating */\n  min-height: 100vh; /* Ensures the container is at least the height of the viewport */\n  margin: 0; /* Removes any default margin */\n  padding: 0; /* Removes any default padding */\n  box-sizing: border-box; /* Ensures padding and borders are included in the element's dimensions */\n  padding-bottom: 10px;\n}\n\niframe {\n  width: 100%;\n  height: 260px;\n  border: none;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: #e0f4ff !important;\n  border-radius: 10px;\n}\n\niframe body {\n  padding: 20px;\n}\n\n.feedback {\n  margin: 20px;\n}", "",{"version":3,"sources":["webpack://./frontend/src/index.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,+BAA+B;EAC/B,gBAAgB;EAChB,kBAAkB;EAClB,YAAY;AACd;;AAEA;EACE,cAAc;EACd,SAAS;AACX;;AAEA;EACE,qBAAqB;AACvB;;AAEA;;;EAGE,cAAc;AAChB;;AAEA;EACE,UAAU;EACV,aAAa;EACb,cAAc;EACd,gBAAgB;EAChB,aAAa;EACb,6DAA6D;EAC7D,gBAAgB;EAChB,eAAe;EACf,gBAAgB;EAChB,kBAAkB;AACpB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,mBAAmB;EACnB,gBAAgB;EAChB,mBAAmB;EACnB,aAAa;EACb,iDAAiD;EACjD,0CAA0C;AAC5C;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,0CAA0C;EAC1C,oBAAoB;AACtB;;AAEA;EACE,aAAa;IACX,sBAAsB;IACtB,gBAAgB;IAChB,yBAAyB;IACzB,aAAa;IACb,mBAAmB;AACvB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,iBAAiB;EACjB,kBAAkB;EAClB,cAAc;EACd,yBAAyB;EACzB,YAAY;EACZ,4CAA4C;EAC5C,iBAAiB;EACjB,yBAAyB;EACzB,0BAA0B;AAC5B;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,uFAAuF;EACvF,UAAU;AACZ;;AAEA;EACE,aAAa;EACb,SAAS;EACT,aAAa;EACb,WAAW;EACX,gBAAgB;EAChB,kCAAkC;AACpC;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,oBAAoB;AACtB;;AAEA;EACE,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,WAAW;EACX,kBAAkB;EAClB,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,kBAAkB;EAClB,YAAY;EACZ,WAAW;EACX,WAAW;EACX,oBAAoB;EACpB,+BAA+B;EAC/B,mBAAmB;AACrB;;AAEA;EACE,+FAA+F,EAAE,iCAAiC;EAClI,sBAAsB,EAAE,kDAAkD;EAC1E,2BAA2B,EAAE,sBAAsB;EACnD,4BAA4B,EAAE,sCAAsC;EACpE,iBAAiB,EAAE,iEAAiE;EACpF,SAAS,EAAE,+BAA+B;EAC1C,UAAU,EAAE,gCAAgC;EAC5C,sBAAsB,EAAE,yEAAyE;EACjG,oBAAoB;AACtB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,YAAY;EACZ,iDAAiD;EACjD,oCAAoC;EACpC,mBAAmB;AACrB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,YAAY;AACd","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');\n\nbody {\n  margin: 0;\n  font-family: \"Lato\", sans-serif;\n  font-weight: 400;\n  font-style: normal;\n  padding: 0px;\n}\n\nh2 {\n  color: #023e8a;\n  margin: 0;\n}\n\n#icplogo > img:hover {\n  transform: scale(1.1);\n}\n\nh1,\np,\nli {\n  color: #001d3d;\n}\n\ncode {\n  width: 80%;\n  height: 300px;\n  margin: 0 auto;\n  margin-top: 20px;\n  padding: 20px;\n  font-family: Menlo, Monaco, \"Courier New\", Courier, monospace;\n  white-space: pre;\n  font-size: 16px;\n  font-weight: 400;\n  overflow-y: scroll;\n}\n\nspan,a {\n  color: #023e8a;\n}\n\nsection {\n  margin-bottom: 30px;\n  text-align: left;\n  border-radius: 10px;\n  padding: 15px;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: rgba(217, 218, 219, 0.8);\n}\n\n.demo {\n  margin-bottom: 20px;\n}\n\nul {\n  list-style-type: none;\n  padding-left: 10px;\n}\n\nfooter {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  background-color: rgba(217, 218, 219, 0.8);\n  padding-bottom: 10px;\n}\n\nform {\n  display: flex;\n    flex-direction: column;\n    margin-top: 10px;\n    background-color: #ebfbfe;\n    padding: 10px;\n    border-radius: 10px;\n}\n\nbutton {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 6px 14px;\n  border-radius: 6px;\n  color: #ebfbfe;\n  background-color: #023e8a;\n  border: none;\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nform button {\n  margin-top: 10px;\n}\n\nbutton:focus {\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);\n  outline: 0;\n}\n\ninput {\n  background: 0;\n  border: 0;\n  outline: none;\n  width: 80vw;\n  max-width: 400px;\n  transition: padding 0.3s 0.2s ease;\n}\n\ninput:focus {\n  padding-bottom: 5px;\n}\n\ninput:focus + .line:after {\n  transform: scaleX(1);\n}\n\n.field {\n  position: relative;\n  margin-bottom: 10px;\n}\n\n.field .line {\n  width: 100%;\n  height: 3px;\n  position: absolute;\n  bottom: -8px;\n  background: #ccedff;\n}\n\n.field .line:after {\n  content: \" \";\n  position: absolute;\n  float: right;\n  width: 100%;\n  height: 3px;\n  transform: scaleX(0);\n  transition: transform 0.3s ease;\n  background: #023e8a;\n}\n\n.main {\n  background-image: url('https://storage.needpix.com/rsynced_images/background-1747792_1280.jpg'); /* Replace with your image path */\n  background-size: cover; /* Ensures the image covers the entire container */\n  background-position: center; /* Centers the image */\n  background-repeat: no-repeat; /* Prevents the image from repeating */\n  min-height: 100vh; /* Ensures the container is at least the height of the viewport */\n  margin: 0; /* Removes any default margin */\n  padding: 0; /* Removes any default padding */\n  box-sizing: border-box; /* Ensures padding and borders are included in the element's dimensions */\n  padding-bottom: 10px;\n}\n\niframe {\n  width: 100%;\n  height: 260px;\n  border: none;\n  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;\n  background-color: #e0f4ff !important;\n  border-radius: 10px;\n}\n\niframe body {\n  padding: 20px;\n}\n\n.feedback {\n  margin: 20px;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

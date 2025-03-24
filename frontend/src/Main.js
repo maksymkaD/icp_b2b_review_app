@@ -6,7 +6,13 @@ import { idlFactory } from './components/idlFactory';
 
 function Main() {
 
-  const canisterId = "br5f7-7uaaa-aaaaa-qaaca-cai";
+  const styles = {
+    container: { paddingLeft: "10%", paddingRight: "10%", textAlign: "center" },
+    header: { marginBottom: "20px" },
+    button: { padding: "10px 20px", fontSize: "16px", cursor: "pointer" }
+  };
+
+  const canisterId = "b77ix-eeaaa-aaaaa-qaada-cai";
   const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : "https://ic0.app";
   const agent = HttpAgent.createSync({ host: host });
 
@@ -14,12 +20,6 @@ function Main() {
     agent,
     canisterId: canisterId,
   });
-
-  const styles = {
-    container: { paddingLeft: "10%", paddingRight: "10%", textAlign: "center" },
-    header: { marginBottom: "20px" },
-    button: { padding: "10px 20px", fontSize: "16px", cursor: "pointer" }
-  };
 
   const [location, setLocation] = useState("");
 

@@ -1,10 +1,5 @@
 {
   "canisters": {
-    "hello": {
-      "candid": "src/hello/hello.did",
-      "package": "hello",
-      "type": "rust"
-    },
     "review_contract": {
       "type": "rust",
       "package": "review_contract",
@@ -12,7 +7,7 @@
     },
     "review_assets": {
       "dependencies": [
-        "hello", "review_contract"
+        "review_contract"
       ],
       "frontend": {
         "entrypoint": "frontend/build/index.html"

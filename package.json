@@ -14,7 +14,7 @@
     "prebuild": "npm run generate",
     "start": "webpack serve --mode development --env development",
     "prestart": "npm run generate",
-    "generate": "dfx generate hello"
+    "generate": "dfx generate review_contract"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
