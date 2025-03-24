@@ -1,4 +1,4 @@
-# 🏛 ICP B2B Review App
+# 🏛 ICP Review App
 A blockchain-powered review application that provides immutable, tamper-proof reviews for businesses. Reviews are securely embedded via an iframe to ensure trust and authenticity.
 
 # 🚀 Features
