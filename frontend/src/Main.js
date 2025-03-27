@@ -12,13 +12,13 @@ function Main() {
     button: { padding: "10px 20px", fontSize: "16px", cursor: "pointer" }
   };
 
-  const canisterId = "b77ix-eeaaa-aaaaa-qaada-cai";
-  const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : "https://ic0.app";
+  const reviewCanisterId = "rj4qn-tiaaa-aaaaa-qagsq-cai";
+  const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : window.location.href;
   const agent = HttpAgent.createSync({ host: host });
 
   const actor = Actor.createActor(idlFactory, {
     agent,
-    canisterId: canisterId,
+    canisterId: reviewCanisterId,
   });
 
   const [location, setLocation] = useState("");
@@ -29,7 +29,7 @@ function Main() {
       ? window.location.href.slice(0, -1)
       : window.location.href;
 
-    setLocation(`${baseUrl}/embed/${canisterId}`);
+    setLocation(`${baseUrl}/embed/${reviewCanisterId}`);
   }, []);
 
   const postReview = async (name,text) => {

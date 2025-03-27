@@ -8,7 +8,7 @@ const Review = () => {
   const { id } = useParams();  
   const [blockchainData, setBlockchainData] = useState(null);
 
-  const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : "https://ic0.app";
+  const host = window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1") ? "http://127.0.0.1:4943" : "https://icp0.io";
   const agent = HttpAgent.createSync({ host: host });
 
   const actor = Actor.createActor(idlFactory, {

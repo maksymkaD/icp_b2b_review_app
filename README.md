@@ -73,3 +73,8 @@ service : {
 };
 ```
 ![alt text](screenshots/contractui.png)
+
+
+# 📦 Deployed app link
+Front-end canister: https://ra73r-faaaa-aaaaa-qagta-cai.icp0.io/
+Contract canister (Candid UI): https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=rj4qn-tiaaa-aaaaa-qagsq-cai
