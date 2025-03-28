@@ -51,6 +51,7 @@ UI consists of 1-page demo, including the brief project description, input to pu
 ![alt text](screenshots/app.png)
 The review widgets are connected to a canister id passed in URL (*Review.js*)
 ![alt text](screenshots/iframe.png)
+Front-end canister can serve multiple review canisters UI.
 
 # 🤝 Contract overview
 Methods and structs declared in the .did file:
@@ -74,6 +75,7 @@ service : {
 ```
 ![alt text](screenshots/contractui.png)
 
+Reviews are stored in a stable memory.
 
 # 📦 Deployed app link
 Front-end canister: https://ra73r-faaaa-aaaaa-qagta-cai.icp0.io/

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { idlFactory } from './components/idlFactory';
+import { Helmet } from 'react-helmet';
 
 function Main() {
 
@@ -39,6 +40,9 @@ function Main() {
 
   return (
     <>
+          <Helmet>
+      <title>TrustChain Review</title>
+    </Helmet>
       <div className="main" style={styles.container}>
         <header style={styles.header}>
           <motion.h1
